@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="file" name="myfile">
+    <button type="submit">Upload and analyze</button>
+  </form>
+
+  <h1>File Information</h1>
+  <ul>
+    {% for key, value in file_info.items %}
+      <li>{{ key }}: {{ value }}</li>
+    {% endfor %}
+  </ul>
+
+  <h1>Missing Values</h1>
+  {{ missing_values|safe }}
+
+  <h1>Data Types</h1>
+  {{ data_types|safe }}
+
+  <h1>Result</h1>
+  <ul>
+    <li>Preason's r</li>
+    {{ results.r_table|safe }}
+    <li>probability <i>p</i> &lt; x</li>
+    {{ results.p_table|safe }}
+  </ul>
+
+  <h1>Data Preview</h1>
+  {{ df_preview|safe }}
+
+  {% if summary_stats %}
+    <h2>Summary Statistics</h2>
+    {{ summary_stats|safe }}
+  {% endif %}
+
+  
+
+
+{% endblock %}
